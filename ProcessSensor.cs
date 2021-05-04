@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using FanControl.Plugins;
+using System.Collections.Generic;
 using System.Diagnostics;
-using FanControl.Plugins;
+using System.Linq;
 
 namespace FanControl.ProcessSensor
 {
@@ -10,26 +11,28 @@ namespace FanControl.ProcessSensor
     public class ProcessSensor : IPluginSensor
     {
         private int pass = 0;
-        private string processName;
+        private List<string> processNames;
         private float notPresentTemperature;
         private float presentTemperature;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="processName">The process name to match</param>
+        /// <param name="sensorName">The name of the sensor to display in the UI</param>
+        /// <param name="processNames">The process names to match</param>
         /// <param name="notPresentTemperature">Temperature to report if process not found</param>
         /// <param name="presentTemperature">Temperature to report if process found</param>
-        public ProcessSensor(string processName, float notPresentTemperature, float presentTemperature)
+        public ProcessSensor(string sensorName, List<string> processNames, float notPresentTemperature, float presentTemperature)
         {
-            this.processName = processName;
+            Name = sensorName;
+            this.processNames = processNames;
             this.notPresentTemperature = notPresentTemperature;
             this.presentTemperature = presentTemperature;
         }
 
-        public string Id => $"Sensor_{processName}";
+        public string Id => $"Sensor_{string.Join("_", processNames)}";
 
-        public string Name => $"Sensor ({processName})";
+        public string Name { get; private set; }
 
         public float? Value { get; private set; }
 
@@ -41,7 +44,8 @@ namespace FanControl.ProcessSensor
             if (++pass % 10 == 1)
             {
                 var processes = Process.GetProcesses();
-                if (processes.Any(process => process.ProcessName.ToLower() == processName.ToLower()))
+
+                if (processes.Any(process => processNames.Contains(process.ProcessName.ToLower())))
                 {
                     Value = presentTemperature;
                 }
