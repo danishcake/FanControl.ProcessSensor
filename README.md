@@ -4,6 +4,11 @@ A plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) providin
 ## Installation
 Assuming that you have FanControl extracted at `C:\FanControl` unzip the release archive into `C:\FanControl\Plugins`, so that the plugin DLL is located at `C:\FanControl\Plugins\FanControl.ProcessSensor.dll`.
 
+The DLL may need to be unblocked before use. Right click `C:\FanControl\Plugins\FanControl.ProcessSensor.dll` and check Unblock.
+![Unblock DLL](doc/Unblock.png)
+
+This is probably only required if you extracted the release archive using Explorer. Third party zip applications like 7zip do not require this step.
+
 ## Configuration
 The plugin is configurable using a `.cfg` file that exists alonside the DLL. Out of the box it will detect notepad, and output a temperature of 100°C if it's running.
 

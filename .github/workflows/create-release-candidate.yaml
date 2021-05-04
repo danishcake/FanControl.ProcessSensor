@@ -6,7 +6,7 @@ on:
 
 env:
   BUILD_CONFIGURATION: Release
-  TARGET: netstandard2.0
+  TARGET: net48
   SOLUTION_FILE_PATH: ProcessSensor.sln
 
 jobs:
