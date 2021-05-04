@@ -55,7 +55,7 @@ namespace FanControl.ProcessSensor
                         // Malformed row. Ignore and continue
                     }
                 }
-            } catch(Exception e)
+            } catch(Exception)
             {
                 // Broad catch to handle all cases like 'configuration file missing'
             }
